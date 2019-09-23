@@ -1,0 +1,26 @@
+# This docker-compose file starts up all the Dockerized portions of the
+# product. It is very smart; if this configuration changes, affected
+# containers will automatically be upgraded and restarted if necessary.
+#
+# To start up all of the services in the background:
+#   docker-compose up -d
+#
+# To update your Docker images to the latest and restart the services:
+#   docker-compose pull && docker-compose up -d
+#
+
+
+networks:
+  aionet:
+    driver: bridge
+services:
+  dbinstance:
+    container_name: postgres
+    image: postgres:11
+    networks:
+    - aionet
+    ports:
+    - 5432:5432
+    restart: unless-stopped
+
+version: '3'
